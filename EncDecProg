@@ -1,8 +1,18 @@
 #!/usr/bin/python
 
+# For this to work you need to have the pycrypto and simple-crypt
+# libraries. 
+# This program will run a 256 salt encryption on any file its presented
+# with based on any key or password of your choice. I originally worte 
+# it just to encrypt word documents. The file with the password or key
+# you want to use should be a plain text file with NO SPACES on either 
+# side of the string. 
+
 from simplecrypt import encrypt, decrypt
 import sys
 
+# Reads the plain text file containing the password or key used to encrypt
+# the file and assignes it to the variable 'key'.
 def EncDecKey():
 	global key
 	with open(code, 'r') as ni:
@@ -10,6 +20,10 @@ def EncDecKey():
 		ni.close()
 	return
 
+# opens the file you want to encrypt and assings it to the variable 'plaintext'
+# and then uses the string assigned to 'key' and begins to encrypt 'plaintext'
+# Finally a file is created with enc at the begining and writes the new encrypted
+# data to it. 
 def EncryptDoc():
 	with open(doc, 'rb') as fo:
 		plaintext = fo.read()
@@ -20,6 +34,8 @@ def EncryptDoc():
 	print 'Document Encrypted'
 	return
 
+# This does pretty much the same thing as the encryption part. only this time 
+# all the data is decrypted and written to a new file beggining with dec. 
 def DecryptDoc():
 	with open(doc, 'rb') as fo:
 		ciphertext = fo.read()
@@ -30,10 +46,12 @@ def DecryptDoc():
 	print 'Document Decrypted'
 	return
 
-
+# Here I just used the old sys.argv to read arguments form the command line. 
+# if sys.argv[1] doesnt meet the proper arguments, then a USAGE statement is 
+# printed for the user. 
 def main():
 	global code, doc
-	if sys.argv == '-e':
+	if sys.argv[1] == '-e':
 		doc = sys.argv[2]
 		code = sys.argv[3]
 		EncDecKey()
