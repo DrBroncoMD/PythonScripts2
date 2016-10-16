@@ -1,0 +1,59 @@
+#!/usr/bin/python
+
+from simplecrypt import encrypt, decrypt
+import sys
+
+def EncDecKey():
+	global key
+	with open(code, 'r') as ni:
+		key = ni.read()
+		ni.close()
+	return
+
+def EncryptDoc():
+	with open(doc, 'rb') as fo:
+		plaintext = fo.read()
+	enc = encrypt(key, plaintext)
+	with open('enc' + doc, 'wb') as fo:
+		fo.write(enc)
+		fo.close()
+	print 'Document Encrypted'
+	return
+
+def DecryptDoc():
+	with open(doc, 'rb') as fo:
+		ciphertext = fo.read()
+	dec = decrypt(key, ciphertext)
+	with open('dec' + doc, 'wb') as fo:
+		fo.write(dec)
+		fo.close()
+	print 'Document Decrypted'
+	return
+
+
+def main():
+	global code, doc
+	if sys.argv == '-e':
+		doc = sys.argv[2]
+		code = sys.argv[3]
+		EncDecKey()
+		EncryptDoc()
+	elif sys.argv[1] == '-d':
+		doc = sys.argv[2]
+		code = sys.argv[3]
+		EncDecKey()
+		DecryptDoc()
+	elif sys.argv[1] != '-e' or sys.argv[1] != '-d':	
+		print 'USAGE'
+		print '-e = encrypt : -d = decrypt'
+		print
+		print './EncDecProg -e example.docx example.key'
+		print
+		print 'make sure password is in a plain text file'
+		print 'with no spaces on either side'
+		print
+	return
+
+
+main()	
+
